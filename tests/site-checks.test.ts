@@ -129,12 +129,12 @@ test('user requested modifications are applied', () => {
   // User's new intro text present
   assert.equal(indexText.includes('starts with a problem I find, or a thing that I want'), true, 'Should include updated intro phrasing');
   assert.equal(indexText.includes('I build tools to <span id="morph-phrase"'), true, 'Should include animated morph-phrase');
-  assert.equal(indexText.includes("make my parent's lives easier"), true, 'Should include initial tools phrase');
+  assert.equal(indexText.includes("make my parents' lives easier"), true, 'Should include initial tools phrase');
 
   // Morph phrase cycling phrases in js/site.js
   const jsText = fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf-8');
   const expectedPhrases = [
-    "make my parent's lives easier",
+    "make my parents' lives easier",
     "help me work",
     "help me study",
     "help me find jobs",
@@ -170,7 +170,7 @@ test('user requested modifications are applied', () => {
   assert.equal(indexText.includes('<p>I like ending up with something I actually use every day.</p>'), true, 'Ending sentence should be on its own line/paragraph');
 
   // Updated P&G intro sentence
-  assert.equal(indexText.includes("I've spent the last 2 years at P&G building tools to automate data pipelines and eliminate thousands of hours of work"), true, 'Should include updated P&G sentence');
+  assert.equal(indexText.includes("I've spent the last year and a half at P&G building tools to automate data pipelines and eliminate thousands of hours of work"), true, 'Should include updated P&G sentence');
   assert.equal(indexText.includes("and I'm looking for a new opportunity to build towards something!"), true, 'Should include build towards something opportunity clause');
 
   // All three animated elements must be synchronized on the same timer
@@ -181,11 +181,11 @@ test('user requested modifications are applied', () => {
   assert.equal(setIntervalMatches.length, 1, 'All animated parts must be on a single shared timer');
 
   // Focus elements updates
-  assert.equal(indexText.includes('20$ smart ring'), true, 'OpenRing hook should use 20$');
+  assert.equal(indexText.includes('$20 smart ring'), true, 'OpenRing hook should use $20');
   assert.equal(indexText.includes('used by over 50 people'), true, 'Tunify should say over 50 people');
   assert.equal(indexText.includes('50+ people'), false, '50+ people should be replaced');
   assert.equal(indexText.includes('teaches kids how to program'), true, 'ProBot should say teaches kids how to program');
-  assert.equal(indexText.includes('<li>Building...</li>'), true, 'Now section should include Building...');
+  assert.equal(indexText.includes('<li>Building OpenRing. Sleep history is next.</li>'), true, 'Now section should include Building...');
   assert.equal(indexText.includes('<li>Finishing my 4th year at Western.</li>'), true, 'Now section should include Finishing my 4th year');
   assert.equal(indexText.includes("The best way to reach me is email. I read everything and I'm happy to talk! Let's talk life, plans, opportunities, projects, or a good album!"), true, 'Contact paragraph should match requested copy');
   assert.equal(indexText.includes('CS @ Western University'), true, 'Header should include CS @ Western University');
@@ -217,3 +217,28 @@ test('opening hero state and scroll prompt are configured', () => {
 
 
 
+
+test('every local link, image, script and stylesheet points to a real file', () => {
+  const htmlFiles = [
+    'index.html',
+    'projects/openring.html',
+    'projects/pdf-tools.html',
+    'projects/job-hunt.html',
+    '404.html',
+  ];
+  const siteUrl = 'https://zarif2142.github.io/';
+
+  for (const f of htmlFiles) {
+    const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
+    for (const [, attr, ref] of text.matchAll(/(href|src|content)="([^"#?]+)[^"]*"/g)) {
+      if (attr === 'content' && !ref.startsWith(siteUrl)) continue;
+      // Only check files: other repos share the domain (e.g. /pdf-tools/), and bare paths can't be resolved here
+      if (!/\.[a-z0-9]+$/i.test(ref)) continue;
+      let target: string;
+      if (ref.startsWith(siteUrl)) target = ref.slice(siteUrl.length);
+      else if (/^(https?:|mailto:|data:)/.test(ref)) continue;
+      else target = path.join(path.dirname(f), ref);
+      assert.equal(fs.existsSync(path.join(ROOT, target)), true, `${f} references missing file: ${ref}`);
+    }
+  }
+});

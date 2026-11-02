@@ -8,20 +8,20 @@
     <link rel="canonical" href="https://zarif2142.github.io/projects/openring.html" />
 
     <meta property="og:title" content="OpenRing · Zarif Ahmed" />
-    <meta property="og:description" content="A 20$ smart ring, my own iPhone app, and no cloud." />
+    <meta property="og:description" content="A $20 smart ring, my own iPhone app, and no cloud." />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://zarif2142.github.io/projects/openring.html" />
-    <meta property="og:image" content="https://zarif2142.github.io/assets/img/og.png" />
+    <meta property="og:image" content="https://zarif2142.github.io/assets/img/openring-cover.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="OpenRing · Zarif Ahmed" />
-    <meta name="twitter:description" content="A 20$ smart ring, my own iPhone app, and no cloud." />
-    <meta name="twitter:image" content="https://zarif2142.github.io/assets/img/og.png" />
+    <meta name="twitter:description" content="A $20 smart ring, my own iPhone app, and no cloud." />
+    <meta name="twitter:image" content="https://zarif2142.github.io/assets/img/openring-cover.jpg" />
 
     <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/style.css?v=8" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -31,7 +31,7 @@
         <div class="header-top">
           <div>
             <a href="../index.html" class="brand-name">Zarif Ahmed</a>
-            <div class="site-title">CS @ Western University<br />Software/Data/Security Engineer</div>
+            <div class="site-title">CS @ Western University<br /><span id="morph-role" class="morph-role">Software</span> Engineer</div>
           </div>
           <nav class="site-nav" aria-label="Navigation">
             <a href="../index.html" class="nav-back-link">&larr; All work</a>
@@ -68,7 +68,7 @@
           <div class="reading-column">
             <header class="project-header-intro">
               <h1 class="project-page-title">OpenRing</h1>
-              <p class="project-page-intro">OpenRing is an iPhone app for the COLMI R06, a smart ring that costs about 20$. It reads health data straight off the ring over Bluetooth and keeps everything on the phone. No account, no vendor app, no cloud.</p>
+              <p class="project-page-intro">OpenRing is an iPhone app for the COLMI R06, a smart ring that costs about $20. It reads health data straight off the ring over Bluetooth and keeps everything on the phone. No account, no vendor app, no cloud.</p>
             </header>
 
             <figure class="project-figure">
@@ -92,24 +92,12 @@
               </ul>
             </section>
 
-            <figure class="project-figure">
-              <div class="img-frame" data-file="openring-1.jpg" style="--aspect: 16/10;">
-                <img src="../assets/img/openring-1.jpg" alt="OpenRing historical charts and health trends" width="680" height="425" loading="lazy" onerror="this.style.display='none'" />
-              </div>
-              <figcaption class="mono-caption">Swift Charts rendering daily, weekly and monthly health metrics.</figcaption>
-            </figure>
 
             <section class="project-body-section">
               <h2 class="project-subhead">What was hard</h2>
               <p>Code that looked right on paper kept breaking the moment real bytes came off the ring, so I started testing against the actual device early and often. The open-source Gadgetbridge project was my best reference for the protocol. Live heart rate and SpO2 only lock on about half the time, and I proved that's a limit of the ring itself by reproducing it with a reference client.</p>
             </section>
 
-            <figure class="project-figure">
-              <div class="img-frame" data-file="openring-2.jpg" style="--aspect: 16/10;">
-                <img src="../assets/img/openring-2.jpg" alt="OpenRing protocol debugger and packet inspector" width="680" height="425" loading="lazy" onerror="this.style.display='none'" />
-              </div>
-              <figcaption class="mono-caption">Binary packet inspection and checksum verification during protocol reverse-engineering.</figcaption>
-            </figure>
 
             <section class="project-body-section">
               <h2 class="project-subhead">Where it's at</h2>
@@ -135,6 +123,6 @@
       </footer>
     </div>
 
-    <script src="../js/site.js"></script>
+    <script src="../js/site.js?v=6"></script>
   </body>
 </html>

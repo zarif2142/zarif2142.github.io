@@ -13,7 +13,7 @@ function getNextItem<T>(items: T[], currentIdx: number): T {
 
 test('cycle logic advances index sequentially and wraps around', () => {
   const phrases = [
-    "make my parent's lives easier",
+    "make my parents' lives easier",
     "help me work",
     "help me study",
     "help me find jobs",
@@ -47,7 +47,7 @@ test('cycle logic advances index sequentially and wraps around', () => {
   // Wrap around back to index 0
   idx = getNextIndex(idx, phrases.length); // 0
   assert.equal(idx, 0);
-  assert.equal(phrases[idx], "make my parent's lives easier");
+  assert.equal(phrases[idx], "make my parents' lives easier");
 });
 
 test('pronoun cycle advances through you, we, I correctly', () => {

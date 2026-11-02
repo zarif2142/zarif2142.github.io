@@ -12,7 +12,8 @@ const init = () => {
     window.addEventListener('wheel', e => { if (e.deltaY > 0) unlock(); }, { passive: true });
     let ty = 0; window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchmove', e => { if (ty - e.touches[0].clientY > 10) unlock(); }, { passive: true });
-    window.addEventListener('keydown', e => { if (['ArrowDown', 'PageDown', ' '].includes(e.key)) unlock(); });
+    window.addEventListener('keydown', e => { if (['ArrowDown', 'PageDown', ' ', 'End', 'Tab'].includes(e.key)) unlock(); });
+    window.addEventListener('hashchange', unlock);
     const p = document.getElementById('scroll-prompt'); if (p) p.onclick = unlock;
     if (b) b.onclick = e => { if (doc.classList.contains('is-intro')) { e.preventDefault(); unlock(); } };
   }
@@ -24,7 +25,7 @@ const init = () => {
     const anims = [
       { el: document.getElementById('morph-pronoun'), list: ['you', 'we', 'I'], idx: 0 },
       { el: document.getElementById('morph-role'), list: ['Software', 'Data', 'Security'], idx: 0 },
-      { el: document.getElementById('morph-phrase'), list: ["make my parent's lives easier", "help me work", "help me study", "help me find jobs", "help me invest", "help me organize", "help me train"], idx: 0 }
+      { el: document.getElementById('morph-phrase'), list: ["make my parents' lives easier", "help me work", "help me study", "help me find jobs", "help me invest", "help me organize", "help me train"], idx: 0 }
     ].filter(a => a.el);
     setInterval(() => { anims.forEach(a => { a.idx = (a.idx + 1) % a.list.length; a.el.classList.add('is-changing'); setTimeout(() => { a.el.textContent = a.list[a.idx]; a.el.classList.remove('is-changing'); }, 350); }); }, 2800);
   }

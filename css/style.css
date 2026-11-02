@@ -200,6 +200,7 @@ html.is-intro,
 html.is-intro body {
   overflow: hidden;
   height: 100vh;
+  height: 100dvh;
 }
 
 html.is-intro .site-header {

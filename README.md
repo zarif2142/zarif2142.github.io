@@ -9,6 +9,6 @@ Static portfolio site hosted on GitHub Pages (`zarif2142.github.io`).
 4. Drop your latest resume into `assets/Zarif_Ahmed_Resume.pdf`.
 
 ## How to Deploy
-1. Commit and push changes directly to the `main` branch.
+1. Run `npm test` (Node 22+), then commit and push to the `main` branch.
 2. GitHub Pages builds and serves the root directory automatically.
 3. Verify live updates at `https://zarif2142.github.io/`.

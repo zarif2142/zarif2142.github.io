@@ -22,12 +22,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=7" />
+    <link rel="stylesheet" href="css/style.css?v=8" />
     <script>
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      window.scrollTo(0, 0);
-      if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-intro');
+      if (!window.location.hash && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+        document.documentElement.classList.add('is-intro');
+      }
     </script>
   </head>
   <body>
@@ -57,16 +58,11 @@
       <main id="main-content">
         <!-- Intro -->
         <section class="intro-section" aria-label="Introduction">
-          <div class="intro-portrait-wrapper">
-            <figure class="img-frame" data-file="zarif.jpg" style="--aspect: 1/1;">
-              <img src="assets/img/zarif.jpg" alt="Portrait photo of Zarif Ahmed" width="220" height="220" loading="eager" onerror="this.style.display='none'" />
-            </figure>
-          </div>
           <div class="intro-content">
             <p>Hey, I'm Zarif. I can build whatever <span id="morph-pronoun" class="morph-pronoun">you</span> want.</p>
-            <p>Most of what I build starts with a problem I find, or a thing that I want. I build tools to <span id="morph-phrase" class="morph-phrase">make my parent's lives easier</span>.</p>
+            <p>Most of what I build starts with a problem I find, or a thing that I want. I build tools to <span id="morph-phrase" class="morph-phrase">make my parents' lives easier</span>.</p>
             <p>I like ending up with something I actually use every day.</p>
-            <p>I've spent the last 2 years at P&G building tools to automate data pipelines and eliminate thousands of hours of work,<br>and I'm looking for a new opportunity to build towards something!</p>
+            <p>I've spent the last year and a half at P&G building tools to automate data pipelines and eliminate thousands of hours of work,<br>and I'm looking for a new opportunity to build towards something!</p>
           </div>
         </section>
 
@@ -168,7 +164,7 @@
                 <article class="project-row">
                   <div class="project-info">
                     <h3 class="project-title"><a href="projects/openring.html">OpenRing</a></h3>
-                    <div class="project-hook">&ldquo;A 20$ smart ring, my own iPhone app, and no cloud.&rdquo;</div>
+                    <div class="project-hook">&ldquo;A $20 smart ring, my own iPhone app, and no cloud.&rdquo;</div>
                     <div class="project-tech">Swift · SwiftUI · CoreBluetooth · XCTest</div>
                     <div class="project-links">
                       <a href="projects/openring.html" class="project-link-item">Read more &rarr;</a>
@@ -233,9 +229,7 @@
               <ul class="now-list">
                 <li>Finishing my 4th year at Western.</li>
                 <li>Looking for a full-time software or data engineering role for 2027.</li>
-                <li>Building...</li>
-                <!-- On repeat: [FILL: album or artist] -->
-                <!-- Wearing a lot of: [FILL: one line, e.g. a brand or a piece] -->
+                <li>Building OpenRing. Sleep history is next.</li>
               </ul>
             </div>
           </div>
@@ -279,6 +273,6 @@
       </footer>
     </div>
 
-    <script src="js/site.js?v=5"></script>
+    <script src="js/site.js?v=6" onerror="document.documentElement.classList.remove('is-intro')"></script>
   </body>
 </html>
