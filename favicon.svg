@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <style>
+    rect { fill: #F5F1EA; }
+    text {
+      fill: #1B1A17;
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 44px;
+    }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #141311; }
+      text { fill: #ECE6DC; }
+    }
+  </style>
+  <rect width="64" height="64" rx="4" />
+  <text x="32" y="45" text-anchor="middle">z</text>
+</svg>

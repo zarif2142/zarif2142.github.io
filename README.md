@@ -1,11 +1,14 @@
-<div align="center">
+# Zarif Ahmed — Portfolio
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Static portfolio site hosted on GitHub Pages (`zarif2142.github.io`).
 
-  <h1>Built with AI Studio</h2>
+## How to Edit Content
+1. Update `index.html` for work experience, projects, or the Now section.
+2. Edit individual case studies in `projects/*.html`.
+3. Add or replace images in `assets/img/` (covers: 16:10, portrait: 1:1).
+4. Drop your latest resume into `assets/Zarif_Ahmed_Resume.pdf`.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
-
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+## How to Deploy
+1. Commit and push changes directly to the `main` branch.
+2. GitHub Pages builds and serves the root directory automatically.
+3. Verify live updates at `https://zarif2142.github.io/`.
