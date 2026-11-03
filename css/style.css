@@ -1204,3 +1204,17 @@ html.has-reveal .notebook-section.is-visible .margin-rail h2 {
     border-color: #cccccc !important;
   }
 }
+
+/* Folio numbers in the margin rail, like a printed notebook */
+#main-content {
+  counter-reset: folio;
+}
+
+.notebook-section {
+  counter-increment: folio;
+}
+
+.margin-rail h2::before {
+  content: counter(folio, decimal-leading-zero) " ";
+  color: var(--accent);
+}
