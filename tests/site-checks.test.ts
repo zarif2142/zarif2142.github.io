@@ -185,7 +185,7 @@ test('user requested modifications are applied', () => {
   assert.equal(indexText.includes('used by over 50 people'), true, 'Tunify should say over 50 people');
   assert.equal(indexText.includes('50+ people'), false, '50+ people should be replaced');
   assert.equal(indexText.includes('teaches kids how to program'), true, 'ProBot should say teaches kids how to program');
-  assert.equal(indexText.includes('<li>Building OpenRing. Sleep history is next.</li>'), true, 'Now section should include Building...');
+  assert.equal(indexText.includes('<li>Still building!</li>'), true, 'Currently section should include Still building!');
   assert.equal(indexText.includes('<li>Finishing my 4th year at Western.</li>'), true, 'Now section should include Finishing my 4th year');
   assert.equal(indexText.includes("The best way to reach me is email. I read everything and I'm happy to talk! Let's talk life, plans, opportunities, projects, or a good album!"), true, 'Contact paragraph should match requested copy');
   assert.equal(indexText.includes('CS @ Western University'), true, 'Header should include CS @ Western University');
