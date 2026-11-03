@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=10" />
+    <link rel="stylesheet" href="css/style.css?v=11" />
     <script>
       if (!window.location.hash) {
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -58,6 +58,11 @@
       <main id="main-content">
         <!-- Intro -->
         <section class="intro-section" aria-label="Introduction">
+          <div class="intro-portrait-wrapper">
+            <figure class="img-frame" style="--aspect: 1/1;">
+              <img src="assets/img/zarif.jpg" alt="Portrait photo of Zarif Ahmed" width="220" height="220" loading="eager" />
+            </figure>
+          </div>
           <div class="intro-content">
             <p>Hey, I'm Zarif. I can build whatever <span id="morph-pronoun" class="morph-pronoun">you</span> want.</p>
             <p>Most of what I build starts with a problem I find, or a thing that I want. I build tools to <span id="morph-phrase" class="morph-phrase">make my parents' lives easier</span>.</p>
@@ -146,8 +151,6 @@
                   </details>
                 </article>
               </div>
-
-              <div class="education-line">Western University, Honours Specialization in Computer Science, April 2027.</div>
             </div>
           </div>
         </section>
@@ -195,7 +198,7 @@
                 <article class="project-row">
                   <div class="project-info">
                     <h3 class="project-title"><a href="projects/job-hunt.html">Job Hunt</a></h3>
-                    <div class="project-hook">The dashboard that found the jobs I'm applying to, and the engine that writes my resumes.</div>
+                    <div class="project-hook">A personal dashboard for tracking my job search.</div>
                     <div class="project-tech">Python · FastAPI · SQLite · React · LaTeX</div>
                     <div class="project-links">
                       <a href="projects/job-hunt.html" class="project-link-item">Read more &rarr;</a>

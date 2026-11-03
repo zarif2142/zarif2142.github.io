@@ -643,13 +643,6 @@ details[open] .work-toggle-btn {
   border-top: 1px dashed var(--rule);
 }
 
-.education-line {
-  font-size: var(--step-0);
-  color: var(--muted);
-  margin-top: 1.75rem;
-  line-height: 1.5;
-}
-
 /* Project Feature Rows */
 .project-row {
   padding-top: 1.5rem;
