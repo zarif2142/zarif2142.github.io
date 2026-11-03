@@ -6,13 +6,16 @@ const init = () => {
     b.style.setProperty('--ix', (Math.round((window.innerWidth - r.width) / 2 - r.left)) + 'px');
     b.style.setProperty('--iy', (Math.round((window.innerHeight - r.height) / 2 - 25 - r.top)) + 'px');
   };
-  const unlock = () => { if (doc.classList.contains('is-intro')) doc.classList.remove('is-intro'); };
+  // The gesture that ends the intro must not also scroll the page (iOS keeps a swipe's momentum going)
+  let hold = 0, ty = 0, held = false;
+  const unlock = () => { if (doc.classList.contains('is-intro')) { doc.classList.remove('is-intro'); window.scrollTo(0, 0); hold = Date.now() + 900; } };
   if (doc.classList.contains('is-intro')) {
     window.scrollTo(0, 0); setPos(); window.addEventListener('resize', setPos);
-    window.addEventListener('wheel', e => { if (e.deltaY > 0) unlock(); }, { passive: true });
-    let ty = 0; window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { passive: true });
-    window.addEventListener('touchmove', e => { if (ty - e.touches[0].clientY > 10) unlock(); }, { passive: true });
-    window.addEventListener('keydown', e => { if (['ArrowDown', 'PageDown', ' ', 'End', 'Tab'].includes(e.key)) unlock(); });
+    window.addEventListener('wheel', e => { if (doc.classList.contains('is-intro') || Date.now() < hold) e.preventDefault(); if (e.deltaY > 0) unlock(); }, { passive: false });
+    window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; held = doc.classList.contains('is-intro'); }, { passive: true });
+    window.addEventListener('touchmove', e => { if (held) e.preventDefault(); if (ty - e.touches[0].clientY > 10) unlock(); }, { passive: false });
+    window.addEventListener('touchend', () => { held = false; }, { passive: true });
+    window.addEventListener('keydown', e => { if (!doc.classList.contains('is-intro')) return; if (['ArrowDown', 'PageDown', ' ', 'End'].includes(e.key)) e.preventDefault(); if (['ArrowDown', 'PageDown', ' ', 'End', 'Tab'].includes(e.key)) unlock(); });
     window.addEventListener('hashchange', unlock);
     const p = document.getElementById('scroll-prompt'); if (p) p.onclick = unlock;
     if (b) b.onclick = e => { if (doc.classList.contains('is-intro')) { e.preventDefault(); unlock(); } };
