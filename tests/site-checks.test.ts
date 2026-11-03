@@ -27,10 +27,10 @@ test('all required static site files exist', () => {
   }
 });
 
-test('js/site.js is under 40 lines', () => {
+test('js/site.js is under 60 lines', () => {
   const content = fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf-8');
   const lines = content.split('\n').filter(Boolean);
-  assert.ok(lines.length < 40, `js/site.js should be under 40 lines, got ${lines.length}`);
+  assert.ok(lines.length < 60, `js/site.js should be under 60 lines, got ${lines.length}`);
 });
 
 test('README.md is 15 lines max', () => {

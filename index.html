@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=11" />
+    <link rel="stylesheet" href="css/style.css?v=13" />
     <script>
       if (!window.location.hash) {
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -33,6 +33,18 @@
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <nav class="mini-bar" aria-label="Section navigation">
+      <div class="mini-bar__inner">
+        <a href="#main-content" class="mini-bar__name">Zarif Ahmed</a>
+        <div class="mini-bar__links">
+          <a href="#work" class="nav-link">Work</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#now" class="nav-link">Now</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </div>
+    </nav>
 
     <div class="page-container">
       <header class="site-header">
@@ -173,7 +185,7 @@
                       <a href="projects/openring.html" class="project-link-item">Read more &rarr;</a>
                     </div>
                   </div>
-                  <figure class="img-frame" data-file="openring-cover.jpg" style="--aspect: 16/10;">
+                  <figure class="img-frame" data-file="openring-cover.jpg" style="--aspect: 16/10; view-transition-name: cover-openring;">
                     <img src="assets/img/openring-cover.jpg" alt="OpenRing application cover preview" width="240" height="150" loading="lazy" onerror="this.style.display='none'" />
                   </figure>
                 </article>
@@ -189,7 +201,7 @@
                       <a href="https://zarif2142.github.io/pdf-tools/" target="_blank" rel="noopener noreferrer" class="project-link-item">Live site &nearr;</a>
                     </div>
                   </div>
-                  <figure class="img-frame" data-file="pdf-tools-cover.jpg" style="--aspect: 16/10;">
+                  <figure class="img-frame" data-file="pdf-tools-cover.jpg" style="--aspect: 16/10; view-transition-name: cover-pdf-tools;">
                     <img src="assets/img/pdf-tools-cover.jpg" alt="PDF Tools application cover preview" width="240" height="150" loading="lazy" onerror="this.style.display='none'" />
                   </figure>
                 </article>
@@ -204,7 +216,7 @@
                       <a href="projects/job-hunt.html" class="project-link-item">Read more &rarr;</a>
                     </div>
                   </div>
-                  <figure class="img-frame" data-file="job-hunt-cover.jpg" style="--aspect: 16/10;">
+                  <figure class="img-frame" data-file="job-hunt-cover.jpg" style="--aspect: 16/10; view-transition-name: cover-job-hunt;">
                     <img src="assets/img/job-hunt-cover.jpg?v=2" alt="Job Hunt dashboard cover preview" width="240" height="150" loading="lazy" onerror="this.style.display='none'" />
                   </figure>
                 </article>
@@ -276,6 +288,6 @@
       </footer>
     </div>
 
-    <script src="js/site.js?v=7" onerror="document.documentElement.classList.remove('is-intro')"></script>
+    <script src="js/site.js?v=8" onerror="document.documentElement.classList.remove('is-intro')"></script>
   </body>
 </html>
