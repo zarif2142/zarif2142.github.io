@@ -1023,13 +1023,19 @@ html {
 /* Negative margin keeps the icons optically aligned with the text edge despite their padding */
 .footer-social-icons {
   gap: 0.25rem;
-  margin: 0 -13px;
+  margin: 0 -0.5rem;
+  flex-wrap: wrap;
 }
 
 .footer-icon-link {
-  width: 44px;
-  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.5rem;
   justify-content: center;
+}
+
+.footer-icon-link svg {
+  flex-shrink: 0;
 }
 
 @media (max-width: 767px) {
