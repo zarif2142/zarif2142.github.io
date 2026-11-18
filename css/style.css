@@ -7,7 +7,7 @@
 :root {
   --paper: #F5F1EA;
   --ink: #1B1A17;
-  --muted: #6A655C;
+  --muted: #5A544B;
   --rule: #DCD5C9;
   --accent: #B23A1E;
   --wash: #EDE7DC;
@@ -194,15 +194,7 @@ a:hover {
   transition: border-bottom-color 0.7s ease 0.25s;
 }
 
-html.is-intro,
-html.is-intro body {
-  overflow: hidden;
-  height: 100vh;
-  height: 100dvh;
-  overscroll-behavior: none;
-  touch-action: none;
-}
-
+/* The intro no longer locks scrolling. Content is visible on load. */
 /* With Reduce Motion on, keep the intro but switch states instantly */
 @media (prefers-reduced-motion: reduce) {
   .header-brand, .brand-name, #main-content, .site-footer, .site-nav, .scroll-prompt, .site-header {
@@ -211,10 +203,6 @@ html.is-intro body {
   .scroll-prompt__arrow {
     animation: none;
   }
-}
-
-html.is-intro .site-header {
-  border-bottom-color: transparent;
 }
 
 .header-top {
@@ -240,14 +228,7 @@ html.is-intro .site-header {
   will-change: transform;
 }
 
-html.is-intro .header-brand {
-  transform: translate(var(--ix, 0px), var(--iy, 0px));
-}
-
 /* Hidden until the script has centred it, so it never flashes in the corner */
-html.is-intro:not(.is-placed) .header-brand {
-  visibility: hidden;
-}
 
 .brand-name {
   font-family: var(--font-serif);
@@ -259,10 +240,6 @@ html.is-intro:not(.is-placed) .header-brand {
   text-decoration: none;
   display: inline-block;
   transition: font-size 0.85s cubic-bezier(0.16, 1, 0.3, 1), color 150ms ease;
-}
-
-html.is-intro .brand-name {
-  font-size: calc(var(--step-4) * 1.22);
 }
 
 .brand-name:hover {
@@ -305,12 +282,6 @@ html.is-intro .brand-name {
   transition: opacity 0.4s ease, color 150ms ease;
 }
 
-html.is-intro .scroll-prompt {
-  display: flex;
-  opacity: 1;
-  pointer-events: auto;
-}
-
 .scroll-prompt:hover,
 .scroll-prompt:focus-visible {
   color: var(--accent);
@@ -337,19 +308,8 @@ html.is-intro .scroll-prompt {
   transition: opacity 0.75s ease 0.2s, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
 }
 
-html.is-intro #main-content {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(28px);
-}
-
 .site-footer {
   transition: opacity 0.6s ease 0.2s;
-}
-
-html.is-intro .site-footer {
-  opacity: 0;
-  pointer-events: none;
 }
 
 /* Navigation */
@@ -360,12 +320,6 @@ html.is-intro .site-footer {
   align-items: center;
   padding-top: 0.5rem;
   transition: opacity 0.65s ease 0.25s, transform 0.65s ease 0.25s;
-}
-
-html.is-intro .site-nav {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-8px);
 }
 
 .nav-link {
@@ -1217,4 +1171,84 @@ html.has-reveal .notebook-section.is-visible .margin-rail h2 {
 .margin-rail h2::before {
   content: counter(folio, decimal-leading-zero) " ";
   color: var(--accent);
+}
+
+/* Portfolio refresh, Nov 2026: static hero, Notes, project endings, larger targets */
+.skills-line {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-top: 1.25rem;
+}
+.work-summary {
+  min-height: 44px;
+  align-items: center;
+}
+.work-detail-link {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+.notes-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.notes-list li {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.notes-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.notes-title {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.notes-title a {
+  text-decoration: none;
+}
+.notes-meta {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.project-nav {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.page-cta {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.page-cta p {
+  margin-bottom: 0.5rem;
+}
+.detail-figure {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+.detail-figure .img-frame {
+  --aspect: 3 / 2;
+}
+.footer-social-label {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  margin-left: 0.4rem;
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Notes · Zarif Ahmed</title>
+    <link>https://zarif2142.github.io/notes/index.html</link>
+    <description>Working notes from real builds.</description>
+    <language>en</language>
+    <item>
+      <title>Talking to a $20 ring: reverse-engineering an undocumented Bluetooth protocol</title>
+      <link>https://zarif2142.github.io/notes/talking-to-a-20-dollar-ring.html</link>
+      <guid>https://zarif2142.github.io/notes/talking-to-a-20-dollar-ring.html</guid>
+      <pubDate>Tue, 18 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Checksummed packets, BCD timestamps, and testing against real bytes from a $20 ring.</description>
+    </item>
+    <item>
+      <title>PDF tools that never see your files</title>
+      <link>https://zarif2142.github.io/notes/pdf-tools-that-never-see-your-files.html</link>
+      <guid>https://zarif2142.github.io/notes/pdf-tools-that-never-see-your-files.html</guid>
+      <pubDate>Tue, 18 Nov 2026 00:00:00 GMT</pubDate>
+      <description>qpdf in WebAssembly, Web Workers, and a security policy that makes uploading impossible, not just promised.</description>
+    </item>
+  </channel>
+</rss>

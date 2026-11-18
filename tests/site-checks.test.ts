@@ -5,25 +5,51 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 
+const HTML_FILES = [
+  'index.html',
+  'projects/openring.html',
+  'projects/pdf-tools.html',
+  'projects/job-hunt.html',
+  'work/pg-data-engineering.html',
+  'work/pg-software-engineering.html',
+  'notes/index.html',
+  'notes/talking-to-a-20-dollar-ring.html',
+  'notes/pdf-tools-that-never-see-your-files.html',
+  '404.html',
+];
+
 test('all required static site files exist', () => {
   const files = [
-    'index.html',
-    'projects/openring.html',
-    'projects/pdf-tools.html',
-    'projects/job-hunt.html',
-    '404.html',
+    ...HTML_FILES,
     'css/style.css',
     'js/site.js',
     'favicon.svg',
     'robots.txt',
     'sitemap.xml',
     'README.md',
+    'notes/feed.xml',
     'assets/Zarif_Ahmed_Resume.pdf',
+    'assets/img/openring-cover.jpg',
+    'assets/img/pdf-tools-cover.jpg',
+    'assets/img/job-hunt-cover.jpg',
+    'assets/img/openring-sleep-week.jpg',
+    'assets/img/openring-ring-sensors.jpg',
+    'assets/img/pdf-tools-compress.jpg',
+    'assets/img/pdf-tools-phone-grid.jpg',
+    'assets/img/job-hunt-triage.jpg',
+    'assets/img/job-hunt-funnel.jpg',
   ];
 
   for (const f of files) {
     const fullPath = path.join(ROOT, f);
     assert.equal(fs.existsSync(fullPath), true, `Expected file to exist: ${f}`);
+  }
+
+  for (const stem of ['openring-cover', 'pdf-tools-cover', 'job-hunt-cover']) {
+    for (const w of [480, 960, 1600]) {
+      assert.equal(fs.existsSync(path.join(ROOT, `assets/img/${stem}-${w}.jpg`)), true, `${stem}-${w}.jpg must exist`);
+      assert.equal(fs.existsSync(path.join(ROOT, `assets/img/${stem}-${w}.webp`)), true, `${stem}-${w}.webp must exist`);
+    }
   }
 });
 
@@ -39,15 +65,12 @@ test('README.md is 15 lines max', () => {
   assert.ok(lines.length <= 15, `README.md should be at most 15 lines, got ${lines.length}`);
 });
 
-test('no prohibited AI cliches or buzzwords in HTML', () => {
-  const htmlFiles = [
-    'index.html',
-    'projects/openring.html',
-    'projects/pdf-tools.html',
-    'projects/job-hunt.html',
-    '404.html',
-  ];
+test('css/style.css grew by less than 3 KB over the 22,784 byte baseline', () => {
+  const size = fs.statSync(path.join(ROOT, 'css/style.css')).size;
+  assert.ok(size < 22784 + 3072, `css/style.css should stay under 25,856 bytes, got ${size}`);
+});
 
+test('no prohibited AI cliches or buzzwords in HTML', () => {
   const bannedKeywords = [
     'passionate',
     'innovative',
@@ -62,7 +85,7 @@ test('no prohibited AI cliches or buzzwords in HTML', () => {
     "let's build something amazing together",
   ];
 
-  for (const f of htmlFiles) {
+  for (const f of HTML_FILES) {
     const text = fs.readFileSync(path.join(ROOT, f), 'utf-8').toLowerCase();
     for (const word of bannedKeywords) {
       assert.equal(
@@ -75,14 +98,7 @@ test('no prohibited AI cliches or buzzwords in HTML', () => {
 });
 
 test('no em dashes (—) anywhere in HTML or CSS', () => {
-  const filesToCheck = [
-    'index.html',
-    'projects/openring.html',
-    'projects/pdf-tools.html',
-    'projects/job-hunt.html',
-    '404.html',
-    'css/style.css',
-  ];
+  const filesToCheck = [...HTML_FILES, 'css/style.css'];
 
   for (const f of filesToCheck) {
     const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
@@ -95,14 +111,7 @@ test('no em dashes (—) anywhere in HTML or CSS', () => {
 });
 
 test('no emojis anywhere in HTML or CSS', () => {
-  const filesToCheck = [
-    'index.html',
-    'projects/openring.html',
-    'projects/pdf-tools.html',
-    'projects/job-hunt.html',
-    '404.html',
-    'css/style.css',
-  ];
+  const filesToCheck = [...HTML_FILES, 'css/style.css'];
 
   // Regex covering standard emoji unicode ranges
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
@@ -117,70 +126,25 @@ test('no emojis anywhere in HTML or CSS', () => {
   }
 });
 
-test('user requested modifications are applied', () => {
+test('homepage is static: no intro lock, no rotating words', () => {
   const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
-
-  // "built by hand" removed
-  assert.equal(indexText.toLowerCase().includes('built by hand'), false, 'Built by hand should be removed');
-
-  // "updated november 2026" removed
-  assert.equal(indexText.toLowerCase().includes('updated november 2026'), false, 'Updated November 2026 should be removed');
-
-  // User's new intro text present
-  assert.equal(indexText.includes('starts with a problem I find, or a thing that I want'), true, 'Should include updated intro phrasing');
-  assert.equal(indexText.includes('I build tools to <span id="morph-phrase"'), true, 'Should include animated morph-phrase');
-  assert.equal(indexText.includes("make my parents' lives easier"), true, 'Should include initial tools phrase');
-
-  // Morph phrase cycling phrases in js/site.js
   const jsText = fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf-8');
-  const expectedPhrases = [
-    "make my parents' lives easier",
-    "help me work",
-    "help me study",
-    "help me find jobs",
-    "help me invest",
-    "help me organize",
-    "help me train"
-  ];
-  for (const phrase of expectedPhrases) {
-    assert.equal(jsText.includes(phrase), true, `js/site.js should include phrase: "${phrase}"`);
-  }
 
-  // Cover jpgs exist
-  assert.equal(fs.existsSync(path.join(ROOT, 'assets/img/openring-cover.jpg')), true, 'openring-cover.jpg must exist');
-  assert.equal(fs.existsSync(path.join(ROOT, 'assets/img/pdf-tools-cover.jpg')), true, 'pdf-tools-cover.jpg must exist');
-  assert.equal(fs.existsSync(path.join(ROOT, 'assets/img/job-hunt-cover.jpg')), true, 'job-hunt-cover.jpg must exist');
-
-  // "Western Developers' Society" and "Western AI" removed
-  assert.equal(indexText.includes("Western Developers' Society"), false, "Western Developers' Society should be removed");
-  assert.equal(indexText.includes('Western AI'), false, 'Western AI should be removed');
-
-  // "Older and smaller" changed to "Older"
-  assert.equal(indexText.includes('Older and smaller'), false, 'Older and smaller should be changed to Older');
-  assert.equal(indexText.includes('<h3 class="older-title">Older</h3>'), true, 'Should include Older title');
-
-  // Intro replacement: "Hey, I'm Zarif. I can build whatever [pronoun] want."
-  assert.equal(indexText.includes("Hey, I'm Zarif. I can build whatever <span id=\"morph-pronoun\""), true, "Should have static 'I can build whatever' with morphing second pronoun");
-  assert.equal(indexText.includes('morph-pronoun-2'), false, 'Should not have morph-pronoun-2 since first I is static');
-  assert.equal(indexText.includes("I'm in my last year of computer science at Western University and I graduate in April 2027"), false, 'Old intro paragraph should be removed');
-
-  // "Most of all" removed, ending sentence on its own line/paragraph
-  assert.equal(indexText.toLowerCase().includes('most of all'), false, 'Most of all should be removed');
-  assert.equal(indexText.toLowerCase().includes('most ofall'), false, 'Most ofall should be removed');
+  assert.equal(indexText.includes('is-intro'), false, 'index.html should not use the intro lock class');
+  assert.equal(indexText.includes('scroll-prompt'), false, 'scroll prompt should be removed');
+  assert.equal(indexText.includes('morph-pronoun'), false, 'rotating pronoun should be removed');
+  assert.equal(indexText.includes('morph-phrase'), false, 'rotating phrase should be removed');
+  assert.equal(jsText.includes('setInterval'), false, 'site.js should not rotate hero words');
+  assert.equal(jsText.includes('is-intro'), false, 'site.js should not use the intro lock class');
+  assert.equal(indexText.includes('I build tools that give people their time back.'), true, 'Static headline should be present');
+  assert.equal(indexText.includes('Software Engineer'), true, 'Static role line should be present');
+  assert.equal(indexText.includes('starts with a problem I find, or a thing that I want'), true, 'Should include updated intro phrasing');
+  assert.equal(indexText.includes("make my parents' lives easier"), true, 'Should include initial tools phrase');
   assert.equal(indexText.includes('<p>I like ending up with something I actually use every day.</p>'), true, 'Ending sentence should be on its own line/paragraph');
-
-  // Updated P&G intro sentence
   assert.equal(indexText.includes("I've spent the last year and a half at P&G building tools to automate data pipelines and eliminate thousands of hours of work"), true, 'Should include updated P&G sentence');
   assert.equal(indexText.includes("and I'm looking for a new opportunity to build towards something!"), true, 'Should include build towards something opportunity clause');
-
-  // All three animated elements must be synchronized on the same timer
-  assert.equal(jsText.includes('morph-pronoun') && jsText.includes('morph-phrase') && jsText.includes('morph-role'), true, 'All three morph targets must exist in site.js');
-  assert.equal(jsText.includes("'Software'") && jsText.includes("'Data'") && jsText.includes("'Security'"), true, 'All three role names must exist in site.js');
-  // Confirm single setInterval governs all morph elements
-  const setIntervalMatches = jsText.match(/setInterval\s*\(/g) || [];
-  assert.equal(setIntervalMatches.length, 1, 'All animated parts must be on a single shared timer');
-
-  // Focus elements updates
+  assert.equal(indexText.includes('Python · SQL · Swift · JavaScript · Azure · Databricks'), true, 'Skills line should be present');
+  assert.equal(indexText.includes('CS @ Western University'), true, 'Header should include CS @ Western University');
   assert.equal(indexText.includes('$20 smart ring'), true, 'OpenRing hook should use $20');
   assert.equal(indexText.includes('used by over 50 people'), true, 'Tunify should say over 50 people');
   assert.equal(indexText.includes('50+ people'), false, '50+ people should be replaced');
@@ -188,47 +152,127 @@ test('user requested modifications are applied', () => {
   assert.equal(indexText.includes('<li>Still building!</li>'), true, 'Currently section should include Still building!');
   assert.equal(indexText.includes('<li>Finishing my 4th year at Western.</li>'), true, 'Now section should include Finishing my 4th year');
   assert.equal(indexText.includes("The best way to reach me is email. I read everything and I'm happy to talk! Let's talk life, plans, opportunities, projects, or a good album!"), true, 'Contact paragraph should match requested copy');
-  assert.equal(indexText.includes('CS @ Western University'), true, 'Header should include CS @ Western University');
-  assert.equal(indexText.includes('id="morph-role"'), true, 'Header should include morph-role');
-  assert.equal(indexText.includes('Engineer'), true, 'Header should include Engineer');
 });
 
-test('opening hero state and scroll prompt are configured', () => {
+test('P&G work entries render open and link to detail pages', () => {
   const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
-  const cssText = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf-8');
-  const jsText = fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf-8');
-
-  // scroll prompt exists
-  assert.equal(indexText.includes('id="scroll-prompt"'), true, 'Scroll prompt should exist in index.html');
-  assert.equal(indexText.includes('scroll down'), true, 'Scroll prompt text should say scroll down');
-
-  // header-brand wrapper exists for selected elements
-  assert.equal(indexText.includes('class="header-brand"'), true, 'Header brand wrapper should exist in index.html');
-
-  // CSS transitions for intro state
-  assert.equal(cssText.includes('html.is-intro .header-brand'), true, 'CSS should contain intro styles for header-brand');
-  assert.equal(cssText.includes('.scroll-prompt'), true, 'CSS should style scroll-prompt');
-  assert.equal(cssText.includes('html.is-intro body'), true, 'CSS should lock overflow during intro');
-
-  // JS has unlock triggers
-  assert.equal(jsText.includes("classList.remove('is-intro')"), true, 'JS should remove is-intro to unlock scrolling');
-  assert.equal(jsText.includes('wheel'), true, 'JS should listen for scroll/wheel trigger');
+  assert.equal(indexText.includes('href="work/pg-data-engineering.html"'), true, 'P&G Data entry should link to its detail page');
+  assert.equal(indexText.includes('href="work/pg-software-engineering.html"'), true, 'P&G Software entry should link to its detail page');
+  const openCount = (indexText.match(/<details class="work-disclosure" open>/g) || []).length;
+  assert.equal(openCount, 2, 'Both P&G entries should render open by default');
 });
 
+test('Notes nav and homepage notes list', () => {
+  const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
+  assert.equal(indexText.includes('href="#notes"'), true, 'Notes should be in the nav');
+  assert.equal(indexText.includes('id="notes"'), true, 'Notes section should exist');
+  assert.equal(indexText.includes('notes/talking-to-a-20-dollar-ring.html'), true, 'Homepage should list the OpenRing post');
+  assert.equal(indexText.includes('notes/pdf-tools-that-never-see-your-files.html'), true, 'Homepage should list the PDF Tools post');
+  const feed = fs.readFileSync(path.join(ROOT, 'notes/feed.xml'), 'utf-8');
+  assert.equal(feed.includes('talking-to-a-20-dollar-ring.html'), true, 'RSS feed should include the OpenRing post');
+  assert.equal(feed.includes('pdf-tools-that-never-see-your-files.html'), true, 'RSS feed should include the PDF Tools post');
+});
 
+test('covers use srcset and honest alt text', () => {
+  const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
+  for (const stem of ['openring-cover', 'pdf-tools-cover', 'job-hunt-cover']) {
+    assert.equal(indexText.includes(`${stem}-480.webp`), true, `Homepage should srcset ${stem} 480w`);
+    assert.equal(indexText.includes(`${stem}-1600.webp`), true, `Homepage should srcset ${stem} 1600w`);
+  }
+  assert.equal(indexText.includes('A black smart ring beside an iPhone showing sleep, heart rate and step charts'), true, 'OpenRing alt should describe the new image');
+  assert.equal(indexText.includes('OpenRing application running on iPhone'), false, 'Old wrong OpenRing alt should be gone');
+  assert.equal(indexText.includes('OpenRing dashboard syncing metrics directly over CoreBluetooth'), false, 'Old wrong OpenRing caption should be gone');
+});
 
+test('project pages: depth, images, navigation and contact', () => {
+  const expectations: Record<string, string[]> = {
+    'projects/openring.html': [
+      '146 RingKit tests',
+      '74 self-check tests',
+      '28 app tests',
+      'openring-sleep-week.jpg',
+      'openring-ring-sensors.jpg',
+      'href="job-hunt.html"',
+      'href="pdf-tools.html"',
+      'Swift, SwiftUI, CoreBluetooth, SwiftData, Swift Charts, XCTest',
+    ],
+    'projects/pdf-tools.html': [
+      'Thirteen PDF tools',
+      'pdf-tools-compress.jpg',
+      'pdf-tools-phone-grid.jpg',
+      'href="openring.html"',
+      'href="job-hunt.html"',
+      'JavaScript, WebAssembly (qpdf), Web Workers, pdf.js, PDFium, Cloudflare Workers, Claude API, GitHub Actions',
+      'separate piece',
+    ],
+    'projects/job-hunt.html': [
+      'What was hard',
+      'job-hunt-triage.jpg',
+      'job-hunt-funnel.jpg',
+      'href="pdf-tools.html"',
+      'href="openring.html"',
+      'Python, FastAPI, SQLite, React, pytest',
+      '543 roles that actually fit',
+    ],
+  };
+
+  for (const [f, phrases] of Object.entries(expectations)) {
+    const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
+    for (const phrase of phrases) {
+      assert.equal(text.includes(phrase), true, `${f} should include: "${phrase}"`);
+    }
+    assert.equal(text.includes('zariftahmed@gmail.com'), true, `${f} should end with a contact block`);
+    assert.equal(text.includes('108 XCTest cases at 93%'), false, `${f} should not keep the stale test figure`);
+    assert.equal(text.includes('Twelve PDF tools'), false, `${f} should not say Twelve PDF tools`);
+  }
+
+  // Word counts in the reading column: 450 to 650 per project page
+  for (const f of ['projects/openring.html', 'projects/pdf-tools.html', 'projects/job-hunt.html']) {
+    const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
+    const match = text.match(/<div class="reading-column">([\s\S]*?)<\/div>\s*<\/article>/);
+    assert.ok(match, `${f} should have a reading column`);
+    const words = match[1].replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+    assert.ok(words >= 450 && words <= 650, `${f} reading column should be 450 to 650 words, got ${words}`);
+  }
+});
+
+test('notes posts are 600 to 800 words with structured data', () => {
+  for (const f of ['notes/talking-to-a-20-dollar-ring.html', 'notes/pdf-tools-that-never-see-your-files.html']) {
+    const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
+    const paras = [...text.matchAll(/<p>([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, ' '));
+    const words = paras.join(' ').split(/\s+/).filter(Boolean).length;
+    assert.ok(words >= 600 && words <= 800, `${f} post body should be 600 to 800 words, got ${words}`);
+    assert.equal(text.includes('"@type": "Article"'), true, `${f} should carry Article JSON-LD`);
+    assert.equal(text.includes('2026-11-18'), true, `${f} should be dated 18 Nov 2026`);
+  }
+  const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
+  assert.equal(indexText.includes('"@type": "Person"'), true, 'Homepage should carry Person JSON-LD');
+  assert.equal(indexText.includes('"@type": "WebSite"'), true, 'Homepage should carry WebSite JSON-LD');
+});
+
+test('sitemap is current and lists every page', () => {
+  const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf-8');
+  for (const page of [
+    'https://zarif2142.github.io/',
+    'https://zarif2142.github.io/projects/openring.html',
+    'https://zarif2142.github.io/projects/pdf-tools.html',
+    'https://zarif2142.github.io/projects/job-hunt.html',
+    'https://zarif2142.github.io/work/pg-data-engineering.html',
+    'https://zarif2142.github.io/work/pg-software-engineering.html',
+    'https://zarif2142.github.io/notes/index.html',
+    'https://zarif2142.github.io/notes/talking-to-a-20-dollar-ring.html',
+    'https://zarif2142.github.io/notes/pdf-tools-that-never-see-your-files.html',
+  ]) {
+    assert.equal(sitemap.includes(page), true, `Sitemap should list ${page}`);
+  }
+  assert.equal(sitemap.includes('<lastmod>2026-11-18</lastmod>'), true, 'Sitemap lastmod should be 2026-11-18');
+  assert.equal(sitemap.includes('2026-11-03'), false, 'Sitemap should not keep the stale 2026-11-03 date');
+});
 
 test('every local link, image, script and stylesheet points to a real file', () => {
-  const htmlFiles = [
-    'index.html',
-    'projects/openring.html',
-    'projects/pdf-tools.html',
-    'projects/job-hunt.html',
-    '404.html',
-  ];
   const siteUrl = 'https://zarif2142.github.io/';
 
-  for (const f of htmlFiles) {
+  for (const f of HTML_FILES) {
     const text = fs.readFileSync(path.join(ROOT, f), 'utf-8');
     for (const [, attr, ref] of text.matchAll(/(href|src|content)="([^"#?]+)[^"]*"/g)) {
       if (attr === 'content' && !ref.startsWith(siteUrl)) continue;
