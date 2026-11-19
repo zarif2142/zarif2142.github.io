@@ -45,7 +45,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css?v=15" />
+    <link rel="stylesheet" href="css/style.css?v=16" />
+    <script>
+      if (!window.location.hash && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+        document.documentElement.classList.add('is-intro');
+      }
+    </script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -68,7 +75,7 @@
         <div class="header-top">
           <div class="header-brand">
             <a href="index.html" class="brand-name">Zarif Ahmed</a>
-            <div class="site-title">CS @ Western University<br />Software Engineer</div>
+            <div class="site-title">CS @ Western University<br /><span id="morph-role" class="morph-role">Software</span> Engineer</div>
           </div>
           <nav class="site-nav" aria-label="Primary navigation">
             <a href="#work" class="nav-link">Work</a>
@@ -80,6 +87,11 @@
         </div>
       </header>
 
+      <button type="button" id="scroll-prompt" class="scroll-prompt" aria-label="Scroll down to explore">
+        <span class="scroll-prompt__text">scroll down</span>
+        <span class="scroll-prompt__arrow" aria-hidden="true">&darr;</span>
+      </button>
+
       <main id="main-content">
         <!-- Intro -->
         <section class="intro-section" aria-label="Introduction">
@@ -89,8 +101,8 @@
             </figure>
           </div>
           <div class="intro-content">
-            <p>Hey, I'm Zarif. I build tools that give people their time back.</p>
-            <p>Most of what I build starts with a problem I find, or a thing that I want. I build tools to make my parents' lives easier.</p>
+            <p>Hey, I'm Zarif. I can build whatever <span id="morph-pronoun" class="morph-pronoun">you</span> want.</p>
+            <p>Most of what I build starts with a problem I find, or a thing that I want. I build tools to <span id="morph-phrase" class="morph-phrase">make my parents' lives easier</span>.</p>
             <p>I like ending up with something I actually use every day.</p>
             <p>I've spent the last year and a half at P&G building tools to automate data pipelines and eliminate thousands of hours of work,<br>and I'm looking for a new opportunity to build towards something!</p>
             <p class="skills-line">Python · SQL · Swift · JavaScript · Azure · Databricks</p>
@@ -122,10 +134,10 @@
                 <!-- P&G Data Eng -->
                 <article class="ledger-row">
                   <div class="work-date-rail">Jan 2026 – Aug 2026 · Toronto</div>
-                  <details class="work-disclosure" open>
+                  <details class="work-disclosure">
                     <summary class="work-summary" aria-label="Toggle details for Procter & Gamble Data Engineering Intern">
                       <span class="work-title-line">Procter &amp; Gamble · Data Engineering Intern</span>
-                      <span class="work-toggle-btn" aria-hidden="true">−</span>
+                      <span class="work-toggle-btn" aria-hidden="true">+</span>
                     </summary>
                     <div class="work-details-body">
                       <div class="work-meta-sub">Innovation North</div>
@@ -138,10 +150,10 @@
                 <!-- P&G Software Eng -->
                 <article class="ledger-row">
                   <div class="work-date-rail">May 2025 – Dec 2025 · Toronto</div>
-                  <details class="work-disclosure" open>
+                  <details class="work-disclosure">
                     <summary class="work-summary" aria-label="Toggle details for Procter & Gamble Software Engineering Intern">
                       <span class="work-title-line">Procter &amp; Gamble · Software Engineering Intern</span>
-                      <span class="work-toggle-btn" aria-hidden="true">−</span>
+                      <span class="work-toggle-btn" aria-hidden="true">+</span>
                     </summary>
                     <div class="work-details-body">
                       <div class="work-meta-sub">NA Trade Promotions &amp; Analytics</div>
@@ -285,7 +297,6 @@
                 <li>Finishing my 4th year at Western.</li>
                 <li>Looking for a full-time software or data engineering role for 2027.</li>
                 <li>Still building!</li>
-                <li>Research role on the Riipen Labs project for What's My Q, Nov to Dec 2026.</li>
                 <li>Working on my capstone: a job intake and technician assignment system.</li>
               </ul>
             </div>
@@ -333,6 +344,6 @@
       </footer>
     </div>
 
-    <script src="js/site.js?v=10"></script>
+    <script src="js/site.js?v=11" onerror="document.documentElement.classList.remove('is-intro')"></script>
   </body>
 </html>

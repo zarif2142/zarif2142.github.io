@@ -126,18 +126,19 @@ test('no emojis anywhere in HTML or CSS', () => {
   }
 });
 
-test('homepage is static: no intro lock, no rotating words', () => {
+test('homepage keeps the scroll intro and rotating words', () => {
   const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
   const jsText = fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf-8');
 
-  assert.equal(indexText.includes('is-intro'), false, 'index.html should not use the intro lock class');
-  assert.equal(indexText.includes('scroll-prompt'), false, 'scroll prompt should be removed');
-  assert.equal(indexText.includes('morph-pronoun'), false, 'rotating pronoun should be removed');
-  assert.equal(indexText.includes('morph-phrase'), false, 'rotating phrase should be removed');
-  assert.equal(jsText.includes('setInterval'), false, 'site.js should not rotate hero words');
-  assert.equal(jsText.includes('is-intro'), false, 'site.js should not use the intro lock class');
-  assert.equal(indexText.includes('I build tools that give people their time back.'), true, 'Static headline should be present');
-  assert.equal(indexText.includes('Software Engineer'), true, 'Static role line should be present');
+  assert.equal(indexText.includes("classList.add('is-intro')"), true, 'index.html should start the scroll intro');
+  assert.equal(indexText.includes('id="scroll-prompt"'), true, 'scroll prompt should be present');
+  assert.equal(indexText.includes('id="morph-pronoun"'), true, 'rotating pronoun should be present');
+  assert.equal(indexText.includes('id="morph-phrase"'), true, 'rotating phrase should be present');
+  assert.equal(indexText.includes('id="morph-role"'), true, 'rotating role should be present');
+  assert.equal(jsText.includes('setInterval'), true, 'site.js should rotate hero words');
+  assert.equal(jsText.includes('is-intro'), true, 'site.js should handle the intro');
+  assert.equal(indexText.includes("Hey, I'm Zarif. I can build whatever"), true, 'Original headline should be present');
+  assert.equal(indexText.includes('time back'), false, 'Replacement headline should be gone');
   assert.equal(indexText.includes('starts with a problem I find, or a thing that I want'), true, 'Should include updated intro phrasing');
   assert.equal(indexText.includes("make my parents' lives easier"), true, 'Should include initial tools phrase');
   assert.equal(indexText.includes('<p>I like ending up with something I actually use every day.</p>'), true, 'Ending sentence should be on its own line/paragraph');
@@ -154,12 +155,12 @@ test('homepage is static: no intro lock, no rotating words', () => {
   assert.equal(indexText.includes("The best way to reach me is email. I read everything and I'm happy to talk! Let's talk life, plans, opportunities, projects, or a good album!"), true, 'Contact paragraph should match requested copy');
 });
 
-test('P&G work entries render open and link to detail pages', () => {
+test('P&G work entries start collapsed and link to detail pages', () => {
   const indexText = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf-8');
   assert.equal(indexText.includes('href="work/pg-data-engineering.html"'), true, 'P&G Data entry should link to its detail page');
   assert.equal(indexText.includes('href="work/pg-software-engineering.html"'), true, 'P&G Software entry should link to its detail page');
   const openCount = (indexText.match(/<details class="work-disclosure" open>/g) || []).length;
-  assert.equal(openCount, 2, 'Both P&G entries should render open by default');
+  assert.equal(openCount, 0, 'P&G entries should start collapsed');
 });
 
 test('Notes nav and homepage notes list', () => {
